@@ -11,21 +11,22 @@ This is my Guess The Number type of game, that features:
 * crate own exception and raising it to exit two layer while loop
 * support of console clear for multiple systems
 
-## event_app
+## event_app v1
 requirements: tinydb
-program that reads and saves event data using tinydb.
-* there is event search with query system
-* upcomming events are listed in order from the most recent one 
-* past events are listed in separate place in order from the most recent one
-* event have mandatory fields
-* future events:
-  * can be edited
-  * can be deleted
-  * comment can't be provided
-* past events
-  * can't be edited
-  * can't be deleted
-  * comment can be provided
+program that reads and saves event data using tinydb as database.
+to play around, you can use create_events(n) function to generate n number of events.
+
+* Event Search with query system
+  * query works for name, id, date
+* Event Monitor, where all events are displayed (from the newly created)
+  * monitor shows 25 events from the list as one-liners
+  * there is a paginatio in event monitor
+  * events can be opened from monitor
+* Event Creation
+  * event have mandatory fields
+* Event View:
+  * event can be edited
+  * event can be deleted
 * events have the following structure in db:
 
   
