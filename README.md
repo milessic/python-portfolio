@@ -4,11 +4,11 @@ This is my portfolio for python stuff, if you are interested in games/applicatio
 If you are interested in my biggest project, which is private, please ask me about jdm_console_racer!
 
 Projects I realized:
-* guess_number
-* event_app
-* jdm_console_racer
+* guess_number v1
+* event_app v1
+* jdm_console_racer v01
 
-## guess_number
+## guess_number v1
 This is my Guess The Number type of game, that features:
 * uses tinydb as database
 * saving highscore to file
@@ -16,7 +16,7 @@ This is my Guess The Number type of game, that features:
 * crate own exception and raising it to exit two layer while loop
 * support of console clear for multiple systems
 
-## event_app (in development)
+## event_app v1
 requirements: tinydb
 program that reads and saves event data using tinydb.
 * there is event search with query system
