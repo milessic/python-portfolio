@@ -1,6 +1,5 @@
 import os
 import re
-import json
 import tinydb
 from tinydb.operations import set
 
@@ -21,22 +20,147 @@ finally:
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+
 def create_event():
     clear()
     print("===Event creation,\n\t-fill each field one by one\n\t-fields with * have to be filled\n\t-fields wihout * can be left empty")
-    ev_name = input("*Event Name: ")
-    ev_date = input("*Event Date: ")
-    ev_start_hour = input("*Event Start Hour: ")
-    ev_end_hour = input("Event End Hour: ")
-    ev_description = input("*Event Description: ")
-    ev_ticketed = input("*Event Ticketed (True/False): ")
-    if ev_ticketed.upper() == "FALSE":
-        ev_ticketed = False
+    # EVENT NAME
+    while True:
+        ev_name = input("*Event Name: ")
+        if len(ev_name) == 0:
+            print("---!!! Criteria for EVENT NAME not met, it can't be empty!")
+        elif len(ev_name) < 3 or len(ev_name) > 20:
+            print("---!!! Criteria for EVENT NAME not met, it has to be at least 3 and up to 20 characters long")
+        else:
+            break
+    # EVENT DATE
+    while True:
+        ev_date = input("*Event Date: ")
+        if ev_date == '':
+            print("---!!! Criteria not met, event date cannot be empty!")
+            continue
+        try:
+            day_validation = 32 > int(ev_date[:2]) > 0
+        except ValueError:
+            day_validation = False
+        try:
+            month_validation = 13 > int(ev_date[3:5]) > 0
+        except ValueError:
+            month_validation = False
+
+        if re.search(r"\d\d-\d\d-\d\d\d\d$", ev_date):
+            format_validation = True
+        else:
+            print("---!!! Criteria not met for format, please enter date in format DD-MM-YYYY")
+            format_validation = False
+
+        if not day_validation:
+            print("---!!! Criteria not met for DAY,   please enter date in format: DD-MM-YYYY")
+        if not month_validation:
+            print("---!!! Criteria not met for MONTH, please enter date in format: DD-MM-YYYY")
+        if month_validation and day_validation and format_validation:
+            break
+    # EVENT START HOUR
+    while True:
+        ev_start_hour = input("*Event Start Hour: ")
+        if ev_start_hour == '':
+            print("---!!! Event Start hour cannot be empty!")
+            continue
+        try:
+            hour_validation = 24 >= int(ev_start_hour[:2]) >= 0
+        except ValueError:
+            hour_validation = False
+        try:
+            minutes_validation = 60 >= int(ev_start_hour[3:5]) >= 0
+        except ValueError:
+            minutes_validation = False
+
+        if re.search(r"\d\d:\d\d$", ev_start_hour):
+            format_validation = True
+        else:
+            print("---!!! Criteria not met for format, please enter hour in format: HH:MM")
+            format_validation = False
+
+        if not hour_validation:
+            print("---!!! Criteria not met for HOUR,   please enter hour in format: HH:MM")
+        if not minutes_validation:
+            print("---!!! Criteria not met for MINUTES,please enter hour in format: HH:MM")
+        if hour_validation and minutes_validation and format_validation:
+            break
+
+    # EVENT END HOUR
+    while True:
+        ev_end_hour = input("Event End Hour: ")
+        if ev_end_hour == '':
+            ev_end_hour = None
+            break
+        try:
+            hour_validation = 24 >= int(ev_end_hour[:2]) >= 0
+        except ValueError:
+            hour_validation = False
+        try:
+            minutes_validation = 60 >= int(ev_end_hour[3:5]) >= 0
+        except ValueError:
+            minutes_validation = False
+
+        if re.search(r"\d\d:\d\d$", ev_end_hour):
+            format_validation = True
+        else:
+            print("---!!! Criteria not met for format, please enter hour in format: HH:MM")
+            format_validation = False
+
+        if not hour_validation:
+            print("---!!! Criteria not met for HOUR,   please enter hour in format: HH:MM")
+        if not minutes_validation:
+            print("---!!! Criteria not met for MINUTES,please enter hour in format: HH:MM")
+        if hour_validation and minutes_validation and format_validation:
+            break
+
+    # EVENT DESCRIPTION
+    while True:
+        ev_description = input("*Event Description: ")
+        if len(ev_description) < 10:
+            print("---!!! Criteria not met, event description has to be at least 10 characters long.")
+        elif len(ev_description) > 80:
+            print("---!!! Criteria not met, event description can be max 80 characters long.")
+        else:
+            break
+
+    # EVENT TICKETED
+    while True:
+        ev_ticketed = input("*Event Ticketed (True/False): ")
+        if ev_ticketed.upper() == "FALSE":
+            ev_ticketed = False
+            break
+        elif ev_ticketed.upper() == "TRUE":
+            ev_ticketed = True
+            break
+        else:
+            print("---!!! Criteria not met, event ticketed can be \"True\" or \"False\"!")
+
+    # EVENT PRICE
     if ev_ticketed:
-        ev_price = input("*Event Price: ")
+        while True:
+            try:
+                ev_price = float(input("*Event Price: "))
+                if ev_price >= 0:
+                    break
+                else:
+                    print("---!!! Criteria not met for Event price, it has to be a positive value!")
+            except ValueError:
+                print("---!!! Criteria not met for Event price, it has to be a number!")
     else:
         ev_price = 0
-    ev_lead_person = input("Lead person: ")
+
+    # LEAD PERSON
+    while True:
+        ev_lead_person = input("Lead person: ")
+        if len(ev_lead_person) >= 20:
+            print("---!!! Criteria not met, lead person can be max 20 characters long!")
+        else:
+            break
+
     new_event = {'event_id': 0, 'event_name': ev_name, 'event_date': ev_date, 'event_start_hour': ev_start_hour, 'event_end_hour': ev_end_hour, 'event_description': ev_description, 'event_ticketed': ev_ticketed, 'event_price': ev_price, 'lead_person': ev_lead_person}
     ev_id = future_events_table.insert(new_event)
     future_events_table.update(set('event_id', ev_id), Events.event_id == 0)
