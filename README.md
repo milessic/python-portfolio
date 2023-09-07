@@ -5,17 +5,11 @@ If you are interested in my biggest project, which is private, please ask me abo
 
 Projects I realized:
 * guess_number v1
+  * simple game featuring saving highscore as txt file and showing up-to-date HUD
 * event_app v1
 * english_dictionary v01
 * jdm_console_racer v01
 
-## guess_number v1
-This is my Guess The Number type of game, that features:
-* uses tinydb as database
-* saving highscore to file
-* showing up-to-date HUD
-* crate own exception and raising it to exit two layer while loop
-* support of console clear for multiple systems
 
 ## event_app v1
 requirements: tinydb

@@ -1,20 +1,24 @@
 # guess the number game
+# guess_number v1.1
 # Milosz Jura milessic
-# 09.2023
+# 2023
 
 from random import randint
-import os
+from clear import clear
 from time import sleep
 
 long_line = "================================================="
 user_score = 0
 
+
 # this class helps to exit the program from 2 level loop
 class GetOutOfLoop( Exception ):
+    r"""exception used for getting of 2 layer loop."""
     pass
 
 
-# oppening highscore file, if not found setting highscore as 0
+# Opening highscore file, if not found setting highscore as 0
+# while is needed here in case of permission error.
 while True:
     try:
         file = open("highscore", "r")
@@ -30,6 +34,10 @@ while True:
 
 # saving highscore if it's higher than one in highscore file, if file doens't exist, create one.
 def save_highscore(t_score):
+    r"""saves user score in case it is higher than previous highscore,
+        returns highscore.
+    """
+    
     while True:
         try:
             t_file = open("highscore", "r")
@@ -52,14 +60,10 @@ def save_highscore(t_score):
     return t_highscore
 
 
-# clears conosle, support for windows and unix based systems
-def clear_console():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
 # prints HUD at the top with score and highscore
 def print_hud(t_score, t_highscore):
-    clear_console()
+    r"""prints HUD with current score and highscore"""
+    clear.clear()
     print(f"{long_line}\n=== your score: {t_score}\ttop score: {t_highscore}\n{long_line}")
 
 
