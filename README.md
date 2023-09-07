@@ -19,29 +19,20 @@ This is my Guess The Number type of game, that features:
 
 ## event_app v1
 requirements: tinydb
-program that reads and saves event data using tinydb.
-* there is event search with query system
-  * query works this way: field_name:searched phrase,
-  * e.g.: event_name:birthday will return all events that contain "birthday" in their names
-* upcomming events are listed in order from the most recent one 
-* past events are listed in separate place in order from the most recent one
-* event creation uses following validation:
-  * event_name = not empty, 3-20 characters long
-  * event_date - not empty, in format DD-MM-YYY
-  * event_start_hour - not empty, in format HH:MM
-  * event_end_hour - can be empty, in format HH:MM
-  * event_description - not empty, 10-80 characters long
-  * lead_person - can be empty, up to 20 characters
-  * event_ticketed - not empty, bool
-  * event_price - if event_ticketed == True, not negative 
-* future events:
-  * can be edited
-  * can be deleted
-  * comment can't be provided
-* past events
-  * can't be edited
-  * can't be deleted
-  * comment can be provided
+program that reads and saves event data using tinydb as database.
+to play around, you can use create_events(n) function to generate n number of events.
+
+* Event Search with query system
+  * query works for name, id, date
+* Event Monitor, where all events are displayed (from the newly created)
+  * monitor shows 25 events from the list as one-liners
+  * there is a paginatio in event monitor
+  * events can be opened from monitor
+* Event Creation
+  * event have mandatory fields
+* Event View:
+  * event can be edited
+  * event can be deleted
 * events have the following structure in db:
   ```
     -event_id - int, auto-set
