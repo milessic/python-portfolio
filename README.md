@@ -4,18 +4,18 @@ This is my portfolio for python stuff, if you are interested in games/applicatio
 If you are interested in my biggest project, which is private, please ask me about jdm_console_racer!
 
 Projects I realized:
-* guess_number
-* event_app
-* jdm_console_racer
+* guess_number v1
+* event_app v1
+* english_dictionary v01
+* jdm_console_racer v01
 
-## guess_number
+## guess_number v1
 This is my Guess The Number type of game, that features:
 * uses tinydb as database
 * saving highscore to file
 * showing up-to-date HUD
 * crate own exception and raising it to exit two layer while loop
 * support of console clear for multiple systems
-
 
 ## event_app v1
 requirements: tinydb
@@ -46,3 +46,11 @@ to play around, you can use create_events(n) function to generate n number of ev
     -event_ticketed - bool
     -evet_price - float
   ```
+
+*** english_dictionary v1 ***
+Calls to API and returns meaning of the word.
+* saves history
+* shows last 10 searched phrases that very succesfully serached
+* uses Free Dictionary API
+* shows word description and speech part
+* handling of status codes
