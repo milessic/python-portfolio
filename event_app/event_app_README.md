@@ -1,6 +1,6 @@
 # event_app v1.1
+``requires: tinydb``
 ### Description
-requirements: tinydb
 program that reads and saves event data using tinydb as database.
 to play around, you can use ``create_events(n)`` function to generate ``n`` number of events.
 
