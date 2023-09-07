@@ -5,8 +5,6 @@ This is my portfolio for python stuff, if you are interested in games/applicatio
 
 Each program has more detailed ``README`` file, which are located in program's directories.
 
-If you are interested in my biggest project, which is private, please ask me about jdm_console_racer!
-
 ## Projects I realized:
 * __guess_number v1.1__
   * simple game featuring saving highscore as txt file and showing up-to-date HUD
