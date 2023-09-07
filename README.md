@@ -6,6 +6,7 @@ If you are interested in my biggest project, which is private, please ask me abo
 Projects I realized:
 * guess_number v1
 * event_app v1
+* english_dictionary v01
 * jdm_console_racer v01
 
 ## guess_number v1
@@ -54,3 +55,11 @@ program that reads and saves event data using tinydb.
     -event_ticketed - bool
     -evet_price - float
   ```
+
+*** english_dictionary v1 ***
+Calls to API and returns meaning of the word.
+* saves history
+* shows last 10 searched phrases that very succesfully serached
+* uses Free Dictionary API
+* shows word description and speech part
+* handling of status codes
