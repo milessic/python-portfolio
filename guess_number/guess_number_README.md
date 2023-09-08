@@ -6,6 +6,9 @@ This is my Guess The Number type of game, that features:
 * crate own exception and raising it to exit two layer while loop
 * support of console clear for multiple systems
 
+## Environment setup
+* install python 3.11.x
+
 ## release notes:
 #### v1.1
 * added documentation

@@ -1,5 +1,11 @@
 # event_app v1.1
-``requires: tinydb``
+
+## Environment setup
+* install python 3.11.x
+* install python module ``tinydb``
+* database is created on initial run automatically
+* (optional) create event data via script create_data.cmd
+
 ### Description
 program that reads and saves event data using tinydb as database.
 to play around, you can use ``create_events(n)`` function to generate ``n`` number of events.
