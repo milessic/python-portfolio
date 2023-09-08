@@ -9,6 +9,10 @@ Features:
 * shows word description and speech part
 * handling of status codes
 
+## Environment setup
+* install python 3.11.x
+* install python module ``requests``
+
 ## release notes:
 #### v1
 * released application.

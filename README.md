@@ -1,9 +1,15 @@
 # python-portfolio
-requires requests
+#### Miłosz Jura milessic
+I'm glad you visited by python portfolio repository :)
+If you are interested in my games/small programs, please have a sit!
 
-This is my portfolio for python stuff, if you are interested in games/applications, please have a sit!\nDescriptions of the applications are written in the order of creation.
+Below you can find list of projects with very short description.<br>
+More detailed information can be found inside each project.
 
 Each program has more detailed ``README`` file, which are located in program's directories.
+
+## Environment setup
+Environment setup varies of the project, so this information can be found at project ``README`` file.
 
 ## Projects I realized:
 * __guess_number v1.1__
