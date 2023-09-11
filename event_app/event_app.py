@@ -1,6 +1,5 @@
 # Miłosz Jura milessic 2023
-
-from clear import clear
+import os
 import re
 import tinydb
 from tinydb.operations import set
@@ -8,36 +7,33 @@ from tinydb.operations import set
 # to play with the program, you can use "create_events(n)" function, where n is number of generated events.
 # or you just can create them one by one :)
 
-current_version = "v1.1"
+current_version = "v1.2"
 
-# create database if not set
+
+class DatabseNotFoundError(Exception):
+    r"""exception to raise in case db.json not found"""
+    pass
+
+# check for db existance
 try:
     db = open("db.json", "r")
     db.close()
+    db_exist = True
 except FileNotFoundError:
-    db = open("db.json", "x")
-    db.close()
-finally:
-    db = tinydb.TinyDB('db.json')
-    future_events_table = db.table('future_events')
-    Events = tinydb.Query()
+    db_exist = False
+
+if not db_exist:
+    raise DatabseNotFoundError("Database not found, have you initialized it? To initialize it use database_init.py script")
+
+db = tinydb.TinyDB('db.json')
+events = db.table('events')
+Events = tinydb.Query()
 
 
-def create_events(number):
-    r"""can be used to create number of events with dummy generated data"""
-
-    # for testing
-    test_event_names_1 = ['extensive', 'python', 'foo', 'john doe', 'cat', 'dog', 'parrot', 'penguin', 'porsche', 'milessic']
-    test_event_names_2 = ['birthday', 'night', 'feeding', 'bar', 'picnic']
-    from random import randint
-    for i in range(number):
-        random_name = f"{test_event_names_1[randint(0, len(test_event_names_2)-1)]} {test_event_names_2[randint(0, len(test_event_names_2)-1)]}"
-        new_event = {'event_id': 0, 'event_name': f"{random_name}", 'event_date': '01-01-2023', 'event_start_hour': f'{randint(0,23)}:{randint(0,59)}',
-                     'event_end_hour': f'{randint(0,23)}:{randint(0,59)}', 'event_description': 'this is test event', 'event_ticketed': True,
-                     'event_price': randint(20,500), 'lead_person': 'system'}
-        ev_id = future_events_table.insert(new_event)
-        future_events_table.update(set('event_id', ev_id), Events.event_id == 0)
-
+def clear():
+    r"""clears console based on user OS"""
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
 
 def set_event_name():
     r"""validation function for event_name, returns validaated event_name"""
@@ -177,7 +173,7 @@ def create_event():
         returns created event id
         """
     # function to create an event, validations are part of this function.
-    clear.clear()
+    clear()
     print("===Event creation,\n---fill each field one by one\n---fields with * have to be filled\n---fields wihout * can be left empty")
     ev_name = set_event_name()
     ev_date = set_event_date()
@@ -188,8 +184,8 @@ def create_event():
     ev_price = set_event_price(ev_ticketed)
     ev_lead_person = set_event_lead_person()
     new_event = {'event_id': 0, 'event_name': ev_name, 'event_date': ev_date, 'event_start_hour': ev_start_hour, 'event_end_hour': ev_end_hour, 'event_description': ev_description, 'event_ticketed': ev_ticketed, 'event_price': ev_price, 'lead_person': ev_lead_person}
-    ev_id = future_events_table.insert(new_event)
-    future_events_table.update(set('event_id', ev_id), Events.event_id == 0)
+    ev_id = events.insert(new_event)
+    events.update(set('event_id', ev_id), Events.event_id == 0)
     print(f"Event with ID {ev_id} created")
     return ev_id
 
@@ -197,7 +193,7 @@ def create_event():
 def delete_event(ev_id):
     r"""deletes event from database, returns info that if event was deleted"""
     try:
-        future_events_table.remove(doc_ids=[int(ev_id)])
+        events.remove(doc_ids=[int(ev_id)])
     except:
         return f"\n---event id:{ev_id} COULD NOT be deleted..."
 
@@ -207,7 +203,7 @@ def return_event(ev_id):
     # returning event with given id as dictionary
     ev_id = int(ev_id)
     try:
-        found_event = future_events_table.get(doc_id=ev_id)
+        found_event = events.get(doc_id=ev_id)
         if found_event:
             return found_event
         else:
@@ -219,7 +215,7 @@ def return_event(ev_id):
 def search_for_event(query_criteria, query_value):
     r"""return search results for event due to provided query, search is insensitive"""
 
-    found_events = future_events_table.search(Events[query_criteria].matches(f"[\s\S]*({query_value})[\s\S]*", flags=re.IGNORECASE))
+    found_events = events.search(Events[query_criteria].matches(f"[\s\S]*({query_value})[\s\S]*", flags=re.IGNORECASE))
     if not found_events:
         print(f'No event found for query: "{query_criteria}:{query_value}"')
         return
@@ -256,7 +252,7 @@ def print_event_card(ev_id):
 def open_event(ev_id):
     r"""opens event card with options to delete, (in future) edit or exit"""
     while True:
-        clear.clear()
+        clear()
         print(f"===EVENT ID {ev_id}")
         print_event_card(ev_id)
         input_event = input("===options:\n\t-EDIT\n\t-DELETE\n\t-go BACK to monitor\n>>> ")
@@ -284,8 +280,8 @@ def show_event_monitor():
     event_list_num = 25
     page = 0
     while True:
-        clear.clear()
-        total_events_in_db = len(future_events_table)
+        clear()
+        total_events_in_db = len(events)
         max_pages = total_events_in_db//event_list_num+1
         first_monitor_event = total_events_in_db-(event_list_num*page)
         print(f"===Reported Events:\n---page {page+1} of {max_pages}\n---found {total_events_in_db} events\n---displaying {event_list_num} events")
@@ -325,7 +321,7 @@ def show_event_monitor():
 
 
 while True:
-    clear.clear()
+    clear()
     menu_choice = input("===event_app v1 Miłosz Jura milessic 2023\nSelect appropiate option:\n-CREATE new event\n-SEARCH\n-open MONITOR\n-EXIT\n>>> ")
     if "EXIT" in menu_choice.upper():
         break
@@ -338,7 +334,7 @@ while True:
         else:
             continue
     elif "SEARCH" in menu_choice.upper():
-        clear.clear()
+        clear()
         event_to_show = input("=== Event Search\n!guide:\n\tto use search first type query criteria, then after colon sign type value to serch.\ne.g:\n\tid:4  or  event_name:job interview\n>>> ")
         if event_to_show[:2].lower() == "id":
             try:

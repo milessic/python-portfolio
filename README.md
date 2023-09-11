@@ -14,8 +14,9 @@ Environment setup varies of the project, so this information can be found at pro
 ## Projects I realized:
 * __guess_number v1.1__
   * simple game featuring saving highscore as txt file and showing up-to-date HUD
-* __event_app v1.1__
+* __event_app v1.2__
   * console program to create, view, search, delete events from database
+  * includes scripts to db init or create dummy data
 * __english_dictionary v1__
   * program that calls to API and returns info about given word
 * __jdm_console_racer v01__
