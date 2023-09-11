@@ -4,12 +4,16 @@
 # 2023
 
 from random import randint
-from clear import clear
 from time import sleep
+import os
 
 long_line = "================================================="
 user_score = 0
 
+def clear():
+    r"""clears console based on user OS"""
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
 
 # this class helps to exit the program from 2 level loop
 class GetOutOfLoop( Exception ):
@@ -63,7 +67,7 @@ def save_highscore(t_score):
 # prints HUD at the top with score and highscore
 def print_hud(t_score, t_highscore):
     r"""prints HUD with current score and highscore"""
-    clear.clear()
+    clear()
     print(f"{long_line}\n=== your score: {t_score}\ttop score: {t_highscore}\n{long_line}")
 
 
