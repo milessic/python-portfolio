@@ -4,9 +4,13 @@
 # https://api.dictionaryapi.dev/api/v2/entries/en/digital
 
 import requests
-from clear import clear
+import os
 
-
+def clear():
+    r"""clears console based on user OS"""
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    
 def print_history():
     r"""prints last 10 searches items."""
     try:
@@ -37,7 +41,7 @@ def print_info(item):
             if status was 200 also saves the item to the history
     """
 
-    clear.clear()
+    clear()
     print(f"=== Checking word '{item}'")
     print("-please wait...")
 
@@ -46,7 +50,7 @@ def print_info(item):
         body = resp.json()
         body = body[0]
         body = body['meanings'][0]
-        clear.clear()
+        clear()
         print(f"=== Checking word '{item}'")
         speech_part = body['partOfSpeech']
         definition = body['definitions'][0]['definition']
@@ -61,18 +65,18 @@ def print_info(item):
                 print(definition[character_limit*line:character_limit*line+character_limit])
         save_to_history(item)
     elif resp.status_code == 404:
-        clear.clear()
+        clear()
         print(f"=== Checking word '{item}'")
         print("No word found, please check spelling...")
     else:
-        clear.clear()
+        clear()
         print(f"=== Checking word '{item}'")
         print(f"[{resp.status_code}] Cannot access server, please try again...")
     input("---\nPress ENTER to exit ...")
 
 
 while True:
-    clear.clear()
+    clear()
     print("===English Dictionary program.")
     print_history()
     try:
@@ -80,7 +84,7 @@ while True:
         print_info(user_input)
     except KeyboardInterrupt:
         try:
-            clear.clear()
+            clear()
             input("Thank you for using english_dictionary press ENTER to close... ")
         except KeyboardInterrupt:
             pass

@@ -1,3 +1,6 @@
 # Miłosz Jura milessic 202x
 
-from clear import clear
+import os
+def clear():
+    r"""clears console based on user OS"""
+    os.system('cls' if os.name == 'nt' else 'clear')
