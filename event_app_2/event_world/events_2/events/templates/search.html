@@ -1,0 +1,29 @@
+{% extends "master.html"%}
+{% block title %}
+    Event Search
+{% endblock %}
+{% block content %}
+    <h1>Event Search</h1>
+    <div class="search-bar">
+        <form action="/search/" method="post" class="search-form">
+            {% csrf_token %}
+            <label for="search">Type phrase to search:</label>
+            <input id="search" type="text" name="search">
+            <input id="submit" type="submit" value="Submit">
+            <a>
+                <button>Clear Search</button>
+            </a>
+        </form>
+    </div>
+    <div class="monitor-event-list">
+        {% for e in events %}
+            <div class ="monitor-item-wrapper">
+                <a href="/monitor/details/{{ e.id }}">
+                    <div>{{ e.id }}</div>
+                    <div>{{ e.event_name }}</div>
+                    <div>{{ e.event_start_date }}</div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

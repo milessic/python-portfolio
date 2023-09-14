@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div class="topnav">
+    <a class="active" href="/">Home</a>
+    <a href="/monitor">Monitor</a>
+    <a href="/help" class="split">Help</a>
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>

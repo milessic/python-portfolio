@@ -1,0 +1,37 @@
+{% extends 'master.html' %}
+{% block title %}
+    Event monitor
+{% endblock %}
+{% block content %}
+    <h1>Event Monitor</h1>
+    <div class="monitor-filters">
+        <div class="monitor-filters-fields">
+            <div class="filter-start-date">
+                <label for="filter-start">Event Start Date</label>
+                <input id="filter-start" type="text">
+            </div>
+            <div class="filter-end-date">
+                <label for="filter-end">Event End Date</label>
+                <input id="filter-end" type="text">
+            </div>
+            <div class="filter-lead-person">
+                <label for="filter-lead">Lead Person:</label>
+                <input id="filter-lead" type="text">
+            </div>
+        </div>
+        <div class="active-filters">
+            <div>Active filters:</div>
+        </div>
+    </div>
+    <div class="monitor-event-list">
+        {% for e in events reversed %}
+            <div class="monitor-item-wrapper">
+                <a href="details/{{ e.id }}">
+                    <div>{{e.id }}</div>
+                    <div class="event-name">{{e.event_name }}</div>
+                    <div class="event-date">{{e.event_start_date }}</div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

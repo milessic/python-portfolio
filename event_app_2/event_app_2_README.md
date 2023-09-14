@@ -56,13 +56,12 @@ App that reads and saves event data using MySQL as a database with web GUI.
 #### Event validation for Edit Event:
 ```
 -event_name - 3 to 80 characters, only editable for admin
--event_date - valid date, editable for events from yesterday to the future
--event_start_hour - valid hour, editable
--event_end_hour - valid hour, editable
--event_description - 10 to 200 characters, editable
--lead_person - up to 200 characters, editable
+-event_start_date - valid date, editable for events from yesterday to the future, includes start_hour
+-event_start_date - valid date, optional, cannot be in past due to event_start_date, includes end_hour
+-event_description - 10 to 255 characters, editable
+-lead_person - up to 255 characters, editable
 -event_ticketed - bool, editable
--event_price  - float, editable if event_ticketed
+-event_price  - int, editable if event_ticketed, in PLN
 ```
 
 ## Environment setup

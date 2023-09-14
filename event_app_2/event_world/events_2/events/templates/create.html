@@ -1,0 +1,64 @@
+{% extends 'master.html' %}
+{% block title %}
+    Create new event
+{% endblock %}
+{% block content %}
+<h1>Event Creation</h1>
+<div class="form-content">
+    <form action="/create/" method="post" class="event-form">
+        {% csrf_token %}
+        {% if messages %}
+            <div class="messages">
+            {% for message in messages %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message  }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="left-form">
+            <div class="field-wrapper">
+                <label for="{{ form.event_name.id_for_label  }}">Event name:</label>
+                {{ form.event_name }}
+                {{ form.event_name.errors }}
+            </div>
+            <div class="field-wrapper">
+                <label for="{{ form.event_description.id_for_label }}">Event description:</label>
+                {{ form.event_description }}
+                {{ form.event_description.errors }}
+            </div>
+            <div class="field-wrapper">
+                <label for="{{ form.event_start_date.id_for_label }}">Event start:</label>
+                {{ form.event_start_date }}
+                {{ form.event_start_date.errors }}
+            </div>
+            <div class="field-wrapper">
+                <label for="{{ form.event_end_date.id_for_label }}">Event <end></end>:</label>
+                {{ form.event_end_date }}
+                {{ form.event_end_date.errors }}
+            </div>
+            <div class="field-wrapper">
+                {{ form.lead_person.errors }}
+                <label for="{{ form.lead_person.id_for_label }}">Lead person:</label>
+                {{ form.lead_person }}
+            </div>
+            <div class="field-wrapper">
+                <label for="{{ form.event_ticketed.id_for_label }}">Event ticketed:</label>
+                {{ form.event_ticketed }}
+                {{ form.event_ticketed.errors }}
+            </div>
+            <div class="field-wrapper">
+                <label for="{{ form.event_price.id_for_label }}">Event price:</label>
+                {{ form.event_price }}
+                {{ form.event_price.errors }}
+            </div>
+
+        </div>
+    <div class="bottom-bar">
+        <a></a>
+        <input id="submit" type="submit" value="Create Event">
+    </div>
+    </div>
+
+
+</form>
+{% endblock %}
