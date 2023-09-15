@@ -112,7 +112,6 @@ div.parent-tile {
 
 div.tile {
   float: left;
-  border = 1px;
   background-color: #333;
   height: 150px;
   width: 150px;
@@ -145,7 +144,7 @@ div.tile {
 .event-details label {
   display: inline-block;
   font-weight: bold;
-  width: 120px;
+  width: 160px;
 }
 
 .event-details #event_description_label {
@@ -191,15 +190,38 @@ div.tile {
 
 .monitor-filters {
   padding-left: 30px;
-  padding-bottom: 15px;
 }
 
 .monitor-filters-fields {
-    display: flex;
+  display: flex;
+}
+
+.filter-lead-person {
+  margin-left: 50px;
 }
 
 .active-filters {
+  display: flex;
   padding-top: 10px;
+  height: 45px;
+}
+
+
+.active-filters span {
+  color: #f2f2f2;
+  margin: 0px 10px 0px 10px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.clear-filters {
+  background: #333;
+}
+
+.active-filters-items {
+  background: #04AA6D;
 }
 
 .popup {
