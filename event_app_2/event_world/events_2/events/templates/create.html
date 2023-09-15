@@ -17,22 +17,22 @@
 
         <div class="left-form">
             <div class="field-wrapper">
-                <label for="{{ form.event_name.id_for_label  }}">Event name:</label>
+                <label for="{{ form.event_name.id_for_label  }}">Event name: * </label>
                 {{ form.event_name }}
                 {{ form.event_name.errors }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_description.id_for_label }}">Event description:</label>
+                <label for="{{ form.event_description.id_for_label }}">Event description: *</label>
                 {{ form.event_description }}
                 {{ form.event_description.errors }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_start_date.id_for_label }}">Event start:</label>
+                <label for="{{ form.event_start_date.id_for_label }}">Event start: *</label>
                 {{ form.event_start_date }}
                 {{ form.event_start_date.errors }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_end_date.id_for_label }}">Event <end></end>:</label>
+                <label for="{{ form.event_end_date.id_for_label }}">Event End:</label>
                 {{ form.event_end_date }}
                 {{ form.event_end_date.errors }}
             </div>
@@ -42,7 +42,7 @@
                 {{ form.lead_person }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_ticketed.id_for_label }}">Event ticketed:</label>
+                <label for="{{ form.event_ticketed.id_for_label }}">Event ticketed: *</label>
                 {{ form.event_ticketed }}
                 {{ form.event_ticketed.errors }}
             </div>

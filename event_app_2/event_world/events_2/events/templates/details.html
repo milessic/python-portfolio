@@ -29,7 +29,21 @@
         <label for="event_start_date">Event start:</label>
             <p id="event_start_date" class="field">{{e.event_start_date}}</p><br>
         <label for="event_end_date">Event end:</label>
-            <p id="event_end_date" class="field">{{e.event_end_date}}</p><br>
+            {% if e.event_end_date %}
+                <p id="event_end_date" class="field">{{e.event_end_date}}</p><br>
+            {% else %}
+                <p id="event_end_date" class="field"> ---</p><br>
+            {% endif %}
+        <label for="event_ticketed">Event ticketed:</label>
+            {% if e.event_ticketed %}
+                <p id="event_ticketed">Yes</p><br>
+                <label for="event_price">Event price:</label>
+                <p id="event_price">{{ e.event_price }}</p>
+            {% elif e.event_ticketed == False %}
+                <p id="event_ticketed">No</p><br>
+            {% else %}
+                <p id="event_ticketed">No info</p>
+            {% endif %}
         <div class="bottom-bar">
             <a></a>
             <a href="?edit_view=True">
@@ -55,22 +69,22 @@
 
         <div class="left-form">
             <div class="field-wrapper">
-                <label for="{{ form.event_name.id_for_label  }}">Event name:</label>
+                <label for="{{ form.event_name.id_for_label  }}">Event name: *</label>
                 {{ form.event_name }}
                 {{ form.event_name.errors }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_description.id_for_label }}">Event description:</label>
+                <label for="{{ form.event_description.id_for_label }}">Event description: *</label>
                 {{ form.event_description }}
                 {{ form.event_description.errors }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_start_date.id_for_label }}">Event start:</label>
+                <label for="{{ form.event_start_date.id_for_label }}">Event start: *</label>
                 {{ form.event_start_date }}
                 {{ form.event_start_date.errors }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_end_date.id_for_label }}">Event <end></end>:</label>
+                <label for="{{ form.event_end_date.id_for_label }}">Event End:</label>
                 {{ form.event_end_date }}
                 {{ form.event_end_date.errors }}
             </div>
@@ -80,7 +94,7 @@
                 {{ form.lead_person }}
             </div>
             <div class="field-wrapper">
-                <label for="{{ form.event_ticketed.id_for_label }}">Event ticketed:</label>
+                <label for="{{ form.event_ticketed.id_for_label }}">Event ticketed: *</label>
                 {{ form.event_ticketed }}
                 {{ form.event_ticketed.errors }}
             </div>
