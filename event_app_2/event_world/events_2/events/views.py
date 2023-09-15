@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 from django.template import loader, RequestContext
@@ -7,11 +8,13 @@ from .models import Event
 from .forms import CreateEventForm, MonitorFilterForm
 
 
+@login_required(login_url='/accounts/login')
 def home(request):
     template = loader.get_template('home.html')
     return HttpResponse(template.render())
 
 
+@login_required(login_url='/accounts/login')
 def create(request):
     list(messages.get_messages(request))
     form_filled = False
@@ -44,6 +47,7 @@ def create(request):
     return render(request, 'create.html', c)
 
 
+@login_required(login_url='/accounts/login')
 def monitor(request):
     active_filters = []
     if request.method == "POST":
@@ -75,6 +79,7 @@ def monitor(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required(login_url='/accounts/login')
 def details(request, id):
     event = Event.objects.get(id=id)
     delete_event = False
@@ -123,11 +128,13 @@ def details(request, id):
     return HttpResponse(template.render(context, request))
 
 
-def help(request):
-    template = loader.get_template("help.html")
+#@login_required(login_url='/accounts/login')
+def events_help(request):
+    template = loader.get_template("events_help.html")
     return HttpResponse(template.render())
 
 
+@login_required(login_url='/accounts/login')
 def search(request):
     if request.method == "POST":
         formx = request.POST

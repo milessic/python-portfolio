@@ -6,13 +6,22 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
 </head>
-<body>
-<div class="topnav">
-    <a class="active" href="/">Home</a>
-    <a href="/monitor">Monitor</a>
-    <a href="/help" class="split">Help</a>
-</div>
-{% block content %}
-{% endblock %}
-</body>
+{% if True %}
+    <body>
+    {% if user.is_authenticated %}
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/monitor">Monitor</a>
+        <a href="/events_help">Help</a>
+        <a href="{% url 'logout' %}" class="split">logout</a>
+        <a href="/xx" class="split">(: {{ user.username }}</a>
+    </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+    </body>
+{% else %}
+    <h1>401</h1>
+    <p>User not authenticated</p>
+{% endif %}
 </html>
