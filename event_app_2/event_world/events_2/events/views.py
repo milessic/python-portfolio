@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 from .models import Event
-from .forms import CreateEventForm
+from .forms import CreateEventForm, MonitorFilterForm
 
 
 def home(request):
@@ -45,11 +45,32 @@ def create(request):
 
 
 def monitor(request):
+    active_filters = []
+    if request.method == "POST":
+        f = request.POST
+        events = Event.objects.all()
+        if f['from_date']:
+            events = events.filter(event_start_date__gte=f['from_date'])
+            active_filters.append(f"event start from: {f['from_date']}")
+        if f['till_date']:
+            events = events.filter(event_start_date__lte=f['till_date'])
+            active_filters.append(f"event start till: {f['till_date']}")
+        if f['lead']:
+            events = events.filter(lead_person__icontains=f['lead'])
+            active_filters.append(f"lead person: {f['lead']}")
+        #events.filter(event_start_date__gte=f['from_date'])
+        #events = Event.objects.filter(event_start_date__range=(f['from_date'], f['till_date']), lead_person__icontains=f['lead'])
+        #HttpResponse(template.render(context, request))
+        f = MonitorFilterForm(initial=f)
+    else:
+        events = Event.objects.all().values()
+        f = MonitorFilterForm()
     list(messages.get_messages(request))
-    events = Event.objects.all().values()
     template = loader.get_template('monitor.html')
     context = {
-        'events': events
+        'events': events,
+        'form': f,
+        'active_filters': active_filters
     }
     return HttpResponse(template.render(context, request))
 
