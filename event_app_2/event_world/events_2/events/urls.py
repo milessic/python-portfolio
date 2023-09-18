@@ -6,7 +6,7 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('monitor/', views.monitor, name='monitor'),
     path('monitor/details/<int:id>', views.details, name='details'),
-    path('users/current', views.users_current, name='users_current'),
+    path('users/<str:username>', views.users, name='users'),
     path('events_help/', views.events_help, name='events_help'),
     path('search/', views.search, name='search')
 ]

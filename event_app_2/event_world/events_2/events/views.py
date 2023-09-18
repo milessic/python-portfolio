@@ -1,12 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 from .models import Event
 from .forms import CreateEventForm, MonitorFilterForm
-
 
 @login_required(login_url='/accounts/login')
 def home(request):
@@ -161,13 +161,15 @@ def search(request):
 
 
 @login_required(login_url='/accounts/login')
-def users_current(request):
-    user = request.user
-    template = loader.get_template('users_current.html')
-    created_events = Event.objects.filter(created_by=f'{user.username}')
+def users(request, username):
+    opened_user = get_object_or_404(User, username=username)
+    created_events = Event.objects.filter(created_by=f'{opened_user.username}')
     created_events = created_events.order_by('-id')[:5]
     context = {
         'created_e': created_events,
+        'u': opened_user,
     }
+    print(13)
+    template = loader.get_template('users.html')
     return HttpResponse(template.render(context, request))
 
