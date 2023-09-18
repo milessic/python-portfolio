@@ -12,9 +12,9 @@
     <div class="topnav">
         <a class="active" href="/">Home</a>
         <a href="/monitor">Monitor</a>
-        <a href="/events_help">Help</a>
+        <a href="/events_help" target="_blank" rel="noopener noreferrer">Help</a>
         <a href="{% url 'logout' %}" class="split">logout</a>
-        <a href="/xx" class="split">(: {{ user.username }}</a>
+        <a href="/users/current" class="split">(: {{ user.username }}</a>
     </div>
     {% endif %}
     {% block content %}

@@ -16,6 +16,7 @@ def home(request):
 
 @login_required(login_url='/accounts/login')
 def create(request):
+    user = request.user
     list(messages.get_messages(request))
     form_filled = False
     if request.method == 'POST':
@@ -28,7 +29,9 @@ def create(request):
             lead_person = form.cleaned_data['lead_person']
             event_ticketed = form.cleaned_data['event_ticketed']
             event_price = form.cleaned_data['event_price']
-            event = Event(event_name=event_name, event_description = event_description, event_start_date = event_start_date, event_end_date = event_end_date, lead_person = lead_person, event_ticketed = event_ticketed, event_price = event_price)
+            user_group = form.cleaned_data['user_group']
+            created_by = user.username
+            event = Event(event_name=event_name, event_description = event_description, event_start_date = event_start_date, event_end_date = event_end_date, lead_person = lead_person, event_ticketed = event_ticketed, event_price = event_price, user_group=user_group, created_by=created_by)
             event.save()
             messages.info(request, mark_safe(f'Event id <a href="/monitor/details/{event.pk}">{event.pk}</a> has been created'))
             form_filled = False
@@ -81,6 +84,7 @@ def monitor(request):
 
 @login_required(login_url='/accounts/login')
 def details(request, id):
+    user = request.user
     event = Event.objects.get(id=id)
     delete_event = False
     list(messages.get_messages(request))
@@ -88,8 +92,6 @@ def details(request, id):
     delete_view = request.GET.get('delete')
     if delete_view == "True":
         delete_event = True
-
-
     if edit_view == "True":
         edit_view = True
     else:
@@ -102,8 +104,9 @@ def details(request, id):
             context = {
                 'id_name': f'{id} {event.event_name}'
             }
-            return HttpResponse(template.render(context))
+            return HttpResponse(template.render(context, request))
         form = CreateEventForm(request.POST or None)
+
         if form.is_valid():
             #event = Event.objects.all().get(event_name=event_name, event_description = event_description, event_start_date = event_start_date, event_end_date = event_end_date, lead_person = lead_person, event_ticketed = event_ticketed, event_price = event_price)
             event.event_name = form.cleaned_data['event_name']
@@ -115,7 +118,7 @@ def details(request, id):
             event.event_price = form.cleaned_data['event_price']
             event.save()
         else:
-            messages.add_message(request, messages.ERROR, f'Event couldn\'t be created!')
+            messages.add_message(request, messages.ERROR, f'Event couldn\'t be saved!')
 
     form = CreateEventForm(initial=event.__dict__)
     template = loader.get_template("details.html")
@@ -131,7 +134,8 @@ def details(request, id):
 #@login_required(login_url='/accounts/login')
 def events_help(request):
     template = loader.get_template("events_help.html")
-    return HttpResponse(template.render())
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 @login_required(login_url='/accounts/login')
@@ -151,3 +155,16 @@ def search(request):
 
     template = loader.get_template("search.html")
     return HttpResponse(template.render(context, request))
+
+
+@login_required(login_url='/accounts/login')
+def users_current(request):
+    user = request.user
+    template = loader.get_template('users_current.html')
+    created_events = Event.objects.filter(created_by=f'{user.username}')
+    created_events = created_events.order_by('-id')[:5]
+    context = {
+        'created_e': created_events,
+    }
+    return HttpResponse(template.render(context, request))
+

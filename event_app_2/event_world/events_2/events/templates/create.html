@@ -17,6 +17,10 @@
 
         <div class="left-form">
             <div class="field-wrapper">
+                <label for="{{ form.user_group.id_for_label }}">Event group: *</label>
+                {{ form.user_group }}
+            </div>
+            <div class="field-wrapper">
                 <label for="{{ form.event_name.id_for_label  }}">Event name: * </label>
                 {{ form.event_name }}
                 {{ form.event_name.errors }}

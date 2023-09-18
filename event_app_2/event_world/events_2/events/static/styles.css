@@ -1,3 +1,4 @@
+/* BODY AND TOPNAV */
 body {
   background-color: lightgray;
   font-family: verdana;
@@ -33,6 +34,7 @@ body {
   color: white;
 }
 
+/* EVENT FORM */
 .event-form label {
   color: black;
   font-size: 18px;
@@ -155,6 +157,7 @@ div.tile {
   margin-left:20px;
 }
 
+/* MONITOR */
 .monitor-event-list {
   padding-left: 30px;
   list-style: none;
@@ -188,6 +191,7 @@ div.tile {
   left: 600px;
 }
 
+/* FILTERS */
 .monitor-filters {
   padding-left: 30px;
 }
@@ -224,6 +228,7 @@ div.tile {
   background: #04AA6D;
 }
 
+/* POPUP */
 .popup {
     position: fixed;
     z-index: 1;
@@ -242,4 +247,17 @@ div.tile {
   margin-right: 25%;
   padding: 15px;
   text-align: center;
+}
+
+/* USERS */
+.user-content {
+  margin: 0px 300px 0px 50px;
+}
+
+.user-content .right-block {
+  float: right;
+}
+
+.user-content .left-block {
+  float: left;
 }

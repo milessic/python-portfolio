@@ -1,0 +1,25 @@
+{% extends "master.html"%}
+{% block title %}
+Your Account
+{% endblock %}
+{% block content %}
+<h1>Hello {{ user.username }}</h1>
+<div class="user-content">
+    <div class="left-block">
+        <h2>User settings</h2>
+        <ul>
+            <li><a>Change your password</a></li>
+            <li><a>Change language</a></li>
+            <li><a>Contact support</a></li>
+        </ul>
+    </div>
+    <div class="right-block">
+        <h2>My 5 recently created events:</h2>
+        <ul id="recentlyCreatedEvents" class="recentEvents">
+            {% for e in created_e%}
+            <li><a href="/monitor/details/{{ e.id }}">{{ e.id }}</a> - {{ e.event_name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
