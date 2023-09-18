@@ -185,3 +185,8 @@ def users(request, username):
     template = loader.get_template('users.html')
     return HttpResponse(template.render(context, request))
 
+def forgot_password(request):
+    template = loader.get_template('forgot_password.html')
+    context = {
+    }
+    return HttpResponse(template.render(context, request))
