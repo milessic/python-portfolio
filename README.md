@@ -20,6 +20,7 @@ Environment setup varies of the project, so this information can be found at pro
 * __english_dictionary v1__
   * program that calls to API and returns info about given word
 * __event_app 2 v01__
+  * ![](https://github.com/milessic/python-portfolio/blob/main/event_app_2/demo/helloevent_demo.gif)
   * django web application
   * uses SQLlite as a database
 * __jdm_console_racer v01__
