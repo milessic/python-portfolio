@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.template import loader, RequestContext
 from .models import Event
 from .forms import CreateEventForm, MonitorFilterForm
+from .objects import Page
 
 @login_required(login_url='/accounts/login')
 def home(request):
@@ -73,14 +74,25 @@ def monitor(request):
         #HttpResponse(template.render(context, request))
         f = MonitorFilterForm(initial=f)
     else:
-        events = Event.objects.all().values()
+        events = Event.objects.all().values().order_by('-id')
         f = MonitorFilterForm()
+    total_events = events.count()
     list(messages.get_messages(request))
     template = loader.get_template('monitor.html')
+    current_page = request.GET.get('page')
+    if current_page:
+        page = Page(page=int(current_page), total_events=total_events)
+    else:
+        page = Page(page=1, total_events=total_events)
+
+    events = Event.objects.all().values()[0+(50*(page.page-1)):50*page.page]
     context = {
         'events': events,
+        'total': total_events,
         'form': f,
-        'active_filters': active_filters
+        'active_filters': active_filters,
+        'page': page,
+        'events_on_page': f'{1+(50*(page.page-1))} - {50*page.page}'
     }
     return HttpResponse(template.render(context, request))
 
