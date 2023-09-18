@@ -19,6 +19,9 @@ Your Account
             {% for e in created_e%}
             <li><a href="/monitor/details/{{ e.id }}">{{ e.id }}</a> - {{ e.event_name }}</li>
             {% endfor %}
+            {% if not created_e %}
+            <li>user created no <event></event></li>
+            {% endif %}
         </ul>
     </div>
 </div>

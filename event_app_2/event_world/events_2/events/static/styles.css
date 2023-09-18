@@ -181,14 +181,25 @@ div.tile {
   margin-right: 100px;
 }
 
-.monitor-item-wrapper .event-name {
+.monitor-event-list .event-name {
   position: sticky;
   left: 180px;
 }
 
-.monitor-item-wrapper .event-date {
+.monitor-event-list .event-date {
   position: sticky;
   left: 600px;
+}
+
+.monitor-event-list .event-created-by {
+  position: sticky;
+  left: 1100px;
+}
+
+.monitor-header {
+  display: flex;
+  background: black;
+  color: #f2f2f2;
 }
 
 /* FILTERS */
@@ -200,7 +211,7 @@ div.tile {
   display: flex;
 }
 
-.filter-lead-person {
+.filter-notdate {
   margin-left: 50px;
 }
 

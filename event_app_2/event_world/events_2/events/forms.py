@@ -17,3 +17,4 @@ class MonitorFilterForm(forms.Form):
     from_date = forms.DateField(label="from", required=False)
     till_date = forms.DateField(label="till", required=False)
     lead = forms.CharField(label='Lead Person', max_length=255, required=False)
+    created_by = forms.CharField(label='created_by', max_length=150, required=False)

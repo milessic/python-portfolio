@@ -65,6 +65,9 @@ def monitor(request):
         if f['lead']:
             events = events.filter(lead_person__icontains=f['lead'])
             active_filters.append(f"lead person: {f['lead']}")
+        if f['created_by']:
+            events = events.filter(created_by=f['created_by'])
+            active_filters.append(f"created by: {f['created_by']}")
         #events.filter(event_start_date__gte=f['from_date'])
         #events = Event.objects.filter(event_start_date__range=(f['from_date'], f['till_date']), lead_person__icontains=f['lead'])
         #HttpResponse(template.render(context, request))
