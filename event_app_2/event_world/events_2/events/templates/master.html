@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+{% if True %}
+    <body>
+    {% if user.is_authenticated %}
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/monitor">Monitor</a>
+        <a href="/events_help" target="_blank" rel="noopener noreferrer">Help</a>
+        <a href="{% url 'logout' %}" class="split">logout</a>
+        <a href="/users/{{ user.username }}" class="split">(: {{ user.first_name }} {{ user.last_name }}</a>
+    </div>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
+    </body>
+{% else %}
+    <h1>401</h1>
+    <p>User not authenticated</p>
+{% endif %}
+</html>

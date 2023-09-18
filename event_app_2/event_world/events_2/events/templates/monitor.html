@@ -1,0 +1,75 @@
+{% extends 'master.html' %}
+{% block title %}
+    Event monitor
+{% endblock %}
+{% block content %}
+    <h1>Event Monitor</h1>
+    <div class="monitor-filters">
+        <div>
+            <p>to search by name/id use <a href="/search/">Event Search</a></p>
+        </div>
+        <form action="/monitor/" method="post" class="filter-form">
+            {% csrf_token %}
+            <div class="monitor-filters-fields">
+                <div class="filter-date">
+                    <div>
+                        <span>Filter by date</span><br>
+                        <label for="{{ form.from_date.id_for_label }}">from:</label>
+                        {{ form.from_date }}
+                        {{ form.from_date.errors}}
+
+                        <label for="{{ form.till_date.id_for_label }}">till</label>
+                        {{ form.till_date }}
+                        {{ form.till_date.errors }}
+                    </div>
+                </div>
+                <div class="filter-notdate">
+                    <label for="{{ form.lead.id_for_label }}">Lead Person:</label>
+                    <div>
+                        {{ form.lead }}
+                        {{ form.lead.errors }}
+                    </div>
+                </div>
+                <div class="filter-notdate">
+                    <label for="{{ form.created_by.id_for_label }}">Created by:</label>
+                    <div>
+                        {{ form.created_by }}
+                        {{ form.created_by.errors }}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input id="submit" type="submit" value="Filter Events">
+            </div>
+            <div class="active-filters">
+                <div>Active filters:</div>
+                <div>
+                {% for x in active_filters %}
+                    <span class="active-filters-items"> {{ x }}</span>
+                {% endfor %}
+                {% if active_filters %}
+                <a href="/monitor/"> <span class="clear-filters">Clear filters</span></a>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    <div class="list-event-list">
+        <div class="list-header">
+            <div class="event-id">Event Id</div>
+            <div class="event-name">Event Name</div>
+            <div class="event-date">Event Date</div>
+            <div class="event-created-by">Created By</div>
+        </div>
+        {% for e in events reversed %}
+            <div class="list-item-wrapper">
+                <a href="details/{{ e.id }}">
+                    <div>{{e.id }}</div>
+                    <div class="event-name">{{e.event_name }}</div>
+                    <div class="event-date">{{e.event_start_date }}</div>
+                    <div class="event-created-by">{{e.created_by}}</div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

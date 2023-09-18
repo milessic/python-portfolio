@@ -1,0 +1,44 @@
+{% extends "master.html"%}
+{% block title %}
+{% if user.username == u.username %}
+    Your Account
+{% else %}
+    User - {{ u.first_name }} {{ u.last_name }}
+{% endif %}
+{% endblock %}
+{% block content %}
+{% if user.username == u.username%}
+<h1>Your profile </h1>
+<h2>{{ u.first_name }} {{ u.last_name }}</h2>
+{% else %}
+<h1>{{ u.first_name }} {{ u.last_name }}</h1>
+{% endif %}
+<div class="user-content">
+    <div class="left-block">
+        {% if user.username == u.username %}
+            <h2>My 5 recently created events:</h2>
+        {% else %}
+            <h2>{{ u.first_name }} {{ u.last_name }} 5 recently created events:</h2>
+        {% endif %}
+
+        <ul id="recentlyCreatedEvents" class="recentEvents">
+            {% for e in created_e%}
+            <li><a href="/monitor/details/{{ e.id }}">{{ e.id }}</a> - {{ e.event_name }}</li>
+            {% endfor %}
+            {% if not created_e %}
+            <li>user created no event</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% if user.username == u.username %}
+    <div class="right-block">
+        <h2>User settings</h2>
+        <ul>
+            <li><a>Change your password</a></li>
+            <li><a>Change language</a></li>
+            <li><a>Contact support</a></li>
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

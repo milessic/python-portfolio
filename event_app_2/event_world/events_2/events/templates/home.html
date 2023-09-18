@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+
+{% block title %}
+    Events App
+{% endblock %}
+    {% block content %}
+{% if user.is_authenticated %}
+        <h1>Helloevent!</h1>
+        <div class="parent-tile">
+            <a href="create/">
+                <div class="tile">
+                    <span>Create Event</span>
+                </div>
+            </a>
+            <a href="monitor/">
+               <div class="tile">
+                   <span>Open Monitor</span>
+               </div>
+            </a>
+            <a href="search/">
+                <div class="tile">
+                    <span>Open Search</span>
+                </div>
+            </a>
+        </div>
+
+{% else%}
+    <h1>User logged out</h1>
+    <a href="{% url 'login' %}">click here to login</a>
+{% endif %}
+{% endblock %}
