@@ -7,7 +7,6 @@ App that reads and saves event data using MySQL as a database with web GUI.
 * password reset
 * create account
 * set up roles
-* pagination in Monitor
 * unit tests
 
 # DONE:
@@ -35,6 +34,7 @@ App that reads and saves event data using MySQL as a database with web GUI.
     * created within time range
     * event date within time range
     * lead person
+  * pagination in Monitor
   * search:
     * by name
     * by location

@@ -55,6 +55,19 @@
         </form>
     </div>
     <div class="list-event-list">
+        <!--
+        -->
+        <div class="list-pagination">
+            <div class="showing">Showing <b>{{ events_on_page }}</b> of {{ total }} on page {{ page.page }}</div>
+            <div class="arrows">
+                {% if page.page < page.max_page %}
+                    <a href="?page={{ page.increment }}">next</a>
+                {% endif %}
+                {% if page.page > 1 %}
+                   <a href="?page={{ page.decrement }}">previous</a>
+                {% endif %}
+            </div>
+        </div>
         <div class="list-header">
             <div class="event-id">Event Id</div>
             <div class="event-name">Event Name</div>
