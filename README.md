@@ -20,9 +20,7 @@ Environment setup varies of the project, so this information can be found at pro
 * __english_dictionary v1__
   * program that calls to API and returns info about given word
 * __event_app 2 v01__
-  * uses SQL as a database
-  * can be installed with docker
-  * has web interface written in django
-  * featuring unit tests
+  * django web application
+  * uses SQLlite as a database
 * __jdm_console_racer v01__
   * rpg racing console game

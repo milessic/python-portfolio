@@ -1,7 +1,16 @@
-## program_name current_version
+## Helloevent v01
 ### Description
 App that reads and saves event data using MySQL as a database with web GUI.
 
+# TODO:
+* Users groups, users see only events from associated groups
+* password reset
+* create account
+* set up roles
+* pagination in Monitor
+* unit tests
+
+# DONE:
 * Login to the system
   * with username/login
 * Multiple users
@@ -25,6 +34,7 @@ App that reads and saves event data using MySQL as a database with web GUI.
     * created by
     * created within time range
     * event date within time range
+    * lead person
   * search:
     * by name
     * by location
@@ -66,8 +76,10 @@ App that reads and saves event data using MySQL as a database with web GUI.
 
 ## Environment setup
 * install python 3.11.x
-* pip install mysql-connector-python
-* create database via ``db_init.py`` script
+* setup virtual environemnt
+* install django in the virtual environment
+* set up super user 
+* set up database for Event model
 
 ## release notes:
 #### v version

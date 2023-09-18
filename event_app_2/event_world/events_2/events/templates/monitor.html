@@ -54,15 +54,15 @@
             </div>
         </form>
     </div>
-    <div class="monitor-event-list">
-        <div class="monitor-header">
+    <div class="list-event-list">
+        <div class="list-header">
             <div class="event-id">Event Id</div>
             <div class="event-name">Event Name</div>
             <div class="event-date">Event Date</div>
             <div class="event-created-by">Created By</div>
         </div>
         {% for e in events reversed %}
-            <div class="monitor-item-wrapper">
+            <div class="list-item-wrapper">
                 <a href="details/{{ e.id }}">
                     <div>{{e.id }}</div>
                     <div class="event-name">{{e.event_name }}</div>

@@ -24,13 +24,13 @@ body {
 }
 
 .topnav a.active {
-    background-color: #04AA6D;
+    background-color: #7c0085;
     color: white;
 }
 
 .topnav a.split {
   float: right;
-  background-color: #04AA6D;
+  background-color: #7c0085;
   color: white;
 }
 
@@ -125,7 +125,7 @@ div.tile {
 }
 
 .tile:hover {
-  background-color: #04AA6D;
+  background-color: #7c0085;
 }
 
 .tile span {
@@ -158,45 +158,45 @@ div.tile {
 }
 
 /* MONITOR */
-.monitor-event-list {
+.list-event-list {
   padding-left: 30px;
   list-style: none;
 }
 
-.monitor-item-wrapper:nth-child(even) {
+.list-item-wrapper:nth-child(even) {
   background: #333;
   color: #f2f2f2;
 }
 
-.monitor-item-wrapper:nth-child(odd) {
-  background: #04AA6D;
+.list-item-wrapper:nth-child(odd) {
+  background: #7c0085;
 }
 
-.monitor-item-wrapper a {
+.list-item-wrapper a {
   color: #f2f2f2;
   display:flex;
 }
 
-.monitor-item-wrapper a div {
+.list-item-wrapper a div {
   margin-right: 100px;
 }
 
-.monitor-event-list .event-name {
+.list-event-list .event-name {
   position: sticky;
   left: 180px;
 }
 
-.monitor-event-list .event-date {
+.list-event-list .event-date {
   position: sticky;
   left: 600px;
 }
 
-.monitor-event-list .event-created-by {
+.list-event-list .event-created-by {
   position: sticky;
   left: 1100px;
 }
 
-.monitor-header {
+.list-header {
   display: flex;
   background: black;
   color: #f2f2f2;
@@ -236,7 +236,7 @@ div.tile {
 }
 
 .active-filters-items {
-  background: #04AA6D;
+  background: #7c0085;
 }
 
 /* POPUP */
