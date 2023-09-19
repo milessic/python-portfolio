@@ -18,3 +18,7 @@ class MonitorFilterForm(forms.Form):
     till_date = forms.DateField(label="till", required=False)
     lead = forms.CharField(label='Lead Person', max_length=255, required=False)
     created_by = forms.CharField(label='created_by', max_length=150, required=False)
+
+
+class AddNewCommentForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea(attrs={"rows": "3"}))

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -6,8 +6,9 @@ from django.utils.safestring import mark_safe
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 from .models import Event
-from .forms import CreateEventForm, MonitorFilterForm
+from .forms import CreateEventForm, MonitorFilterForm, AddNewCommentForm
 from .objects import Page
+from urllib.parse import urlsplit, urlunsplit
 
 @login_required(login_url='/accounts/login')
 def home(request):
@@ -85,6 +86,7 @@ def monitor(request):
     else:
         page = Page(page=1, total_events=total_events)
 
+    #events = Event.objects.all().values()[50*page.page:0+(50*(page.page-1))]
     events = Event.objects.all().values()[0+(50*(page.page-1)):50*page.page]
     context = {
         'events': events,
@@ -101,17 +103,27 @@ def monitor(request):
 def details(request, id):
     user = request.user
     event = Event.objects.get(id=id)
+    if not event.event_comments:
+        event_comments = []
+    else:
+        event_comments = list(event.event_comments.split(";:;:"))
+        for i in range(len(event_comments)):
+            event_comments[i] = eval(event_comments[i])
+        event_comments.reverse()
     delete_event = False
     list(messages.get_messages(request))
     edit_view = request.GET.get('edit_view')
     delete_view = request.GET.get('delete')
+    comment_flag = request.GET.get('comment')
+    comment_form = AddNewCommentForm(request.POST or None)
     if delete_view == "True":
         delete_event = True
     if edit_view == "True":
         edit_view = True
     else:
         edit_view = False
-
+    if comment_flag == "True":
+        comment_add = True
     if request.method == 'POST':
         if delete_event == True:
             event.delete()
@@ -120,6 +132,24 @@ def details(request, id):
                 'id_name': f'{id} {event.event_name}'
             }
             return HttpResponse(template.render(context, request))
+        if comment_add:
+            if comment_form.is_valid():
+                user_full_name = f"{user.first_name} {user.last_name}"
+                from datetime import datetime
+                comment = {
+                    'commenter': user_full_name,
+                    'commenter_username': user.username,
+                    'timestamp': datetime.now().isoformat(timespec='minutes'),
+                    'content': comment_form.cleaned_data['content'],
+                }
+                event_comments.append(comment)
+                returned_comment = ""
+                for comment in event_comments:
+                    returned_comment += f"{str(comment)};:;:"
+                returned_comment = returned_comment[:-4]
+                event.event_comments = returned_comment
+                event.save()
+                return redirect(f'/monitor/details/{id}')
         form = CreateEventForm(request.POST or None)
 
         if form.is_valid():
@@ -142,6 +172,8 @@ def details(request, id):
         'edit_view': edit_view,
         'form': form,
         'delete_event': delete_event,
+        'comment_form': comment_form,
+        'comments': event_comments,
     }
     return HttpResponse(template.render(context, request))
 
@@ -181,7 +213,6 @@ def users(request, username):
         'created_e': created_events,
         'u': opened_user,
     }
-    print(13)
     template = loader.get_template('users.html')
     return HttpResponse(template.render(context, request))
 

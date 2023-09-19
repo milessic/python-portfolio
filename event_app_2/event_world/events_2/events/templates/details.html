@@ -22,15 +22,16 @@
             </div>
         </div>
         {% endif %}
-    <div class="event-details left-form">
         <h1 id="event_name">{{ e.event_name }}</h1><br>
+    <div class="event-details left-form">
+        <h2>Details</h2>
         <div>
             <span>
                 <p id="created_by">Created by <a href="/users/{{ e.created_by}}" target="_blank" rel="noopener noreferrer">{{ e.created_by }}</a></p><br>
             </span>
             <span>
                 <label for="creation_date" id=event_creation_date_label">Created:</label>
-                    <p id="creation_date">{{ e.creation_date }}</p>
+                    <p id="creation_date">{{ e.creation_date }}</p><br>
                 <label for="updated_date" id="event_updated_date_label">Last update:</label>
                     <p id="updated_date"> {{ e.last_update }}</p>
             </span>
@@ -66,6 +67,26 @@
                 </a>
             </div>
         {% endif %}
+    </div>
+    <div class="right-form">
+        <h2>Comments</h2>
+        <div id="comments-section">
+            <form id="comments-form" action="/monitor/details/{{ e.id }}?comment=True" method="post">
+                {% csrf_token %}
+                <span>
+                <label for="{{ comment_form.id_for_label }}">Add new comment</label>
+                <input id="comments-submit" type="submit" value="Save comment">
+                </span>
+                {{ comment_form.content.errors }}
+                {{ comment_form.content }}
+            </form>
+            <div id="comments">
+                {% for c in comments %}
+                    <hr>
+                <div class="comment-wrapper"><div class="comment-header"><span class="comment-date">{{ c.timestamp}}</span><span class="comment-commenter"><a href="/users/{{ c.commenter_username }}">{{c.commenter}}</a></span></div><span class="comment-content">{{ c.content }}</span></div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     {% elif edit_view %}
         <h1>Event id {{ e.id }} edit</h1>

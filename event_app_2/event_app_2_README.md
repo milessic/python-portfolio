@@ -42,6 +42,7 @@ App that reads and saves event data using MySQL as a database with web GUI.
     * there is a pagination in event monitor for not displayed events
     * Event View can be opened from monitor
 * Event View 
+  * events comments
   * event can be edited
     * there are different validation rules here
   * files can be uploaded
