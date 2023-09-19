@@ -1,4 +1,7 @@
-/* BODY AND TOPNAV */
+/* GLOBAL */
+h2 {
+  margin-top: 0px;
+}
 body {
   background-color: lightgray;
   font-family: verdana;
@@ -35,6 +38,10 @@ body {
 }
 
 /* EVENT FORM */
+#event_name {
+  margin-bottom: 5px;
+}
+
 .event-form label {
   color: black;
   font-size: 18px;
@@ -73,6 +80,17 @@ body {
 .left-form {
   position: absolute;
   left: 25px;
+  padding-bottom: 50px;
+}
+
+.event-details.left-form {
+  width: 500px;
+}
+
+.right-form {
+  position: absolute;
+  right: 25px;
+  width: 500px;
   padding-bottom: 50px;
 }
 
@@ -157,6 +175,24 @@ div.tile {
   margin-left:20px;
 }
 
+#comments-form {
+  display: inline-grid;
+}
+
+.comment-header {
+  display: grid;
+}
+
+.comment-date {
+  font-size: 8px;
+}
+
+.comment-commenter {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.comment-
 /* MONITOR */
 .list-event-list {
   padding-left: 30px;
