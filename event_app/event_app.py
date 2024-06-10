@@ -2,13 +2,23 @@
 import os
 import re
 import tinydb
+import readline
+from python_sryton import PythonSryton
 from tinydb.operations import set
 
 # to play with the program, you can use "create_events(n)" function, where n is number of generated events.
 # or you just can create them one by one :)
 
-current_version = "v1.2"
+current_version = "v1.3"
+"""Change log
+----1.3:
+- added Edit Event possibility
+- added possiblity to open Event from Monitor using one command
+- added history support
+- added PythonSryton
+"""
 
+muszelka = PythonSryton()
 
 class DatabseNotFoundError(Exception):
     r"""exception to raise in case db.json not found"""
@@ -84,6 +94,7 @@ def set_event_hour(mandatory):
     if mandatory == False: event_end_hour
     returns validated event_hour"""
     # mandatory - True means start hour, False means end hour
+    print(mandatory)
     while True:
         ev_hour = input(f"{'*' if mandatory else ''}Event {'Start' if mandatory else 'End'} Hour: ")
         if ev_hour == '':
@@ -155,7 +166,7 @@ def set_event_price(ticketed):
         return 0
 
 
-def set_event_lead_person():
+def set_lead_person():
     r"""validation function for event_lead_person, returns validated event_lead_person"""
     while True:
         ev_lead_person = input("Lead person: ")
@@ -182,7 +193,7 @@ def create_event():
     ev_description = set_event_description()
     ev_ticketed = set_event_ticketed()
     ev_price = set_event_price(ev_ticketed)
-    ev_lead_person = set_event_lead_person()
+    ev_lead_person = set_lead_person()
     new_event = {'event_id': 0, 'event_name': ev_name, 'event_date': ev_date, 'event_start_hour': ev_start_hour, 'event_end_hour': ev_end_hour, 'event_description': ev_description, 'event_ticketed': ev_ticketed, 'event_price': ev_price, 'lead_person': ev_lead_person}
     ev_id = events.insert(new_event)
     events.update(set('event_id', ev_id), Events.event_id == 0)
@@ -190,6 +201,42 @@ def create_event():
     return ev_id
 
 
+def edit_event(ev_id:int):
+    ev_id = int(ev_id)
+    found_event = return_event(ev_id)
+    new_event = found_event
+    inp = ""
+    all_fields = "\t - " + "\n\t - ".join([f.replace('_', ' ') for f in found_event.keys() if f != 'event_id'])
+    all_fields.replace("lead person", "event lead person")
+    print(f"What field do you want to edit?\n{all_fields}\nType new value and press enter\ntype FIELD NAME, SAVE or CANCEL to exit")
+    first_iteration = True
+    while True:
+        if inp.upper() == "DONE":
+            break
+        inp = input(f"{'------------\nEDIT, SAVE or CANCEL\n' if not first_iteration else ''}>>> ")
+        first_iteration = False
+        if "SAVE" in inp.upper():
+            save = True
+            break
+        if "CANCEL" in inp.upper():
+            save = False
+            break
+        try:
+            print(f"Field '{inp.lower()} is: \'{found_event[inp.replace(' ', '_')]}\'")
+            new_value = print(f"ENTERING NEW {inp}")
+        except KeyError:
+            print(f"There is no field '{inp}'!")
+            continue
+        # new_event[inp.replace(' ', '_')] = new_value
+        try:
+            new_event[inp.replace(' ', '_')] = globals().get(f'set_{inp.replace(" ", "_")}')() if 'hour' not in inp.lower() else set_event_hour(True if 'start' in inp else False) 
+            input(f"EDITED FIELD {inp}, press ENTER")
+        except Exception as e:
+            print(f"COULD NOT SET FIELD '{inp}' due to {e}!")
+    if save:
+        update = events.update(new_event, Events.event_id == ev_id)
+    input(f"{'Event ID:' + str(ev_id) + ' saved' if save else 'Cancelling operation...'}\n>>> PRESS ENTER ")
+    
 def delete_event(ev_id):
     r"""deletes event from database, returns info that if event was deleted"""
     try:
@@ -260,7 +307,7 @@ def open_event(ev_id):
         if "BACK" in input_event.upper():
             return
         elif "EDIT" in input_event.upper():
-            input(f"Sorry, not supported for version {current_version}\npress ENTER to continue\n>>> ")
+            edit_event(ev_id)
         elif "DELETE" in input_event.upper():
             confirm = input("Are you sure? YES/NO\n>>> ")
             if "NO" in confirm.upper():
@@ -311,11 +358,16 @@ def show_event_monitor():
         elif "PREVIOUS" in user_input.upper() and page != 0:
             page -= 1
         elif "OPEN" in user_input.upper():
-            try:
-                input_ev_id = input("type event id to open:\n>>> ")
-            except TypeError:
-                input("invalid id typed, press ENTER to continue...")
-                continue
+            input_as_list = user_input.split(sep=" ")
+            if len(input_as_list) == 2:
+                try:
+                    input_ev_id = int(input_as_list[1])
+                except (ValueError, IndexError):
+                    try:
+                        input_ev_id = input("type event id to open:\n>>> ")
+                    except TypeError:
+                        input("invalid id typed, press ENTER to continue...")
+                        continue
             open_event(input_ev_id)
             pass
 
@@ -349,6 +401,8 @@ while True:
         continue
     elif "MONITOR" in menu_choice.upper():
         show_event_monitor()
+    elif "PYTHONSRYTON" in menu_choice.upper():
+        muszelka.run(locals())
     else:
         input("Unknown command, press ENTER to continue... ")
 input("press ENTER to close ")
