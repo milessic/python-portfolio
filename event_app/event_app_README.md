@@ -1,4 +1,4 @@
-# event_app v1.2
+# event_app v1.3
 
 ## Environment setup
 * install python 3.11.x
@@ -39,6 +39,12 @@ program that reads and saves event data using tinydb as database.
 
 
 ## release notes:
+#### v1.3
+* added Edit Event possibility
+* added possiblity to open Event from Monitor using one command
+* added history support
+* added PythonSryton
+
 #### v1.2
 * removed auto-init of database
 * removed function to create dummy data from ``event_app.py``
