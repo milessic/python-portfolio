@@ -18,26 +18,10 @@ current_version = "v1.3"
 - added PythonSryton
 """
 
-muszelka = PythonSryton()
 
 class DatabseNotFoundError(Exception):
     r"""exception to raise in case db.json not found"""
     pass
-
-# check for db existance
-try:
-    db = open("db.json", "r")
-    db.close()
-    db_exist = True
-except FileNotFoundError:
-    db_exist = False
-
-if not db_exist:
-    raise DatabseNotFoundError("Database not found, have you initialized it? To initialize it use database_init.py script")
-
-db = tinydb.TinyDB('db.json')
-events = db.table('events')
-Events = tinydb.Query()
 
 
 def clear():
@@ -372,37 +356,53 @@ def show_event_monitor():
             pass
 
 
-while True:
-    clear()
-    menu_choice = input("===event_app v1 Miłosz Jura milessic 2023\nSelect appropiate option:\n-CREATE new event\n-SEARCH\n-open MONITOR\n-EXIT\n>>> ")
-    if "EXIT" in menu_choice.upper():
-        break
-    elif "CREATE" in menu_choice.upper():
-        fresh_event = create_event()
-        create_input = input("===choose between:\n-VIEW created event\n-go back to MENU\n>>> ")
-        if "VIEW" in create_input.upper():
-            open_event(fresh_event)
-            input("Press ENTER to open menu\n>>>")
-        else:
-            continue
-    elif "SEARCH" in menu_choice.upper():
+if __name__ == "__main__":
+    muszelka = PythonSryton()
+    # check for db existance
+    try:
+        db = open("db.json", "r")
+        db.close()
+        db_exist = True
+    except FileNotFoundError:
+        db_exist = False
+    
+    if not db_exist:
+        raise DatabseNotFoundError("Database not found, have you initialized it? To initialize it use database_init.py script")
+    
+    db = tinydb.TinyDB('db.json')
+    events = db.table('events')
+    Events = tinydb.Query()
+    while True:
         clear()
-        event_to_show = input("=== Event Search\n!guide:\n\tto use search first type query criteria, then after colon sign type value to serch.\ne.g:\n\tid:4  or  event_name:job interview\n>>> ")
-        if event_to_show[:2].lower() == "id":
-            try:
-                print_event_card(int(event_to_show[3:]))
-            except:
-                print(f"Didn't find event with id {event_to_show[3:]}...")
-        elif event_to_show[:10].lower() == "event_name" or event_to_show[:10].lower() == "event_date":
-            search_for_event(event_to_show[:10].lower(), event_to_show[11:])
+        menu_choice = input("===event_app v1 Miłosz Jura milessic 2023\nSelect appropiate option:\n-CREATE new event\n-SEARCH\n-open MONITOR\n-EXIT\n>>> ")
+        if "EXIT" in menu_choice.upper():
+            break
+        elif "CREATE" in menu_choice.upper():
+            fresh_event = create_event()
+            create_input = input("===choose between:\n-VIEW created event\n-go back to MENU\n>>> ")
+            if "VIEW" in create_input.upper():
+                open_event(fresh_event)
+                input("Press ENTER to open menu\n>>>")
+            else:
+                continue
+        elif "SEARCH" in menu_choice.upper():
+            clear()
+            event_to_show = input("=== Event Search\n!guide:\n\tto use search first type query criteria, then after colon sign type value to serch.\ne.g:\n\tid:4  or  event_name:job interview\n>>> ")
+            if event_to_show[:2].lower() == "id":
+                try:
+                    print_event_card(int(event_to_show[3:]))
+                except:
+                    print(f"Didn't find event with id {event_to_show[3:]}...")
+            elif event_to_show[:10].lower() == "event_name" or event_to_show[:10].lower() == "event_date":
+                search_for_event(event_to_show[:10].lower(), event_to_show[11:])
+            else:
+                print("Only searchh by id, date or event_name are supported for now.")
+            input("Press ENTER to open menu\n>>> ")
+            continue
+        elif "MONITOR" in menu_choice.upper():
+            show_event_monitor()
+        elif "PYTHONSRYTON" in menu_choice.upper():
+            muszelka.run(locals())
         else:
-            print("Only searchh by id, date or event_name are supported for now.")
-        input("Press ENTER to open menu\n>>> ")
-        continue
-    elif "MONITOR" in menu_choice.upper():
-        show_event_monitor()
-    elif "PYTHONSRYTON" in menu_choice.upper():
-        muszelka.run(locals())
-    else:
-        input("Unknown command, press ENTER to continue... ")
-input("press ENTER to close ")
+            input("Unknown command, press ENTER to continue... ")
+    input("press ENTER to close ")
